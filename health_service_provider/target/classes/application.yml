@@ -1,0 +1,47 @@
+dubbo:
+  application:
+    name: dubbo-health-service
+  registry:
+    address: zookeeper://192.168.159.131:2181
+  scan:
+    base-packages: com.java.serviceprovider.service.impl
+server:
+  port: 8002
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/kangan_health?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: 0lxg
+  redis:
+    host: 192.168.159.131
+    port: 6379
+    database: 0
+    timeout: 300000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+  freemarker:
+    template-loader-path: classpath:/static/ftl
+    suffix: .ftl
+    #  关闭缓存，及时刷新，上线生产环境需要修改为true
+    cache: false
+    charset: UTF-8
+    content-type: text/html
+    # 检查模板位置是否存在
+    check-template-location: true
+outputPath: E:\Idea\IdeaProjects\health_parent\health_mobile\src\main\resources\static\pages
+mybatis:
+  type-aliases-package: com.java.common.pojo
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #输出SQL执行日志
+  #分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  params: count=countSql
+  support-methods-arguments: true

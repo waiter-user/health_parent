@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.serviceprovider.mapper.OrderMapper">
+    <!--新增-->
+    <insert id="add" parameterType="com.java.common.pojo.Order" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into t_order
+            (member_id, orderDate, orderType, orderStatus, setmeal_id)
+        values (#{memberId}, #{orderDate}, #{orderType}, #{orderStatus}, #{setmealId})
+    </insert>
+    <!--动态条件查询-->
+    <select id="findByCondition" parameterType="com.java.common.pojo.Order" resultType="long">
+        select count(*)
+        from t_order
+        where orderDate = #{orderDate}
+          and setmeal_id = #{setmeal_id}
+          and member_id = #{member_id}
+    </select>
+    <!--根据预约id查询预约信息，包括体检人信息、套餐信息-->
+    <select id="findByIdsDetail" parameterType="int" resultType="map">
+        select m.name member, s.name setmeal, o.orderDate orderDate, o.orderType orderType
+        from t_order o,
+             t_member m,
+             t_setmeal s
+        where o.member_id = m.id
+          and o.setmeal_id = s.id
+          and o.id = #{id}
+    </select>
+    <select id="selectSetmealCounts" resultType="map">
+        select t2.name, count(t1.id) value
+        from t_order t1, t_setmeal t2
+        where t1.setmeal_id=t2.id
+        group by t2.name
+        order by t2.id
+    </select>
+    <select id="selectCountByOrderDate" resultType="long">
+        select count(id) from t_order where orderDate=#{value}
+    </select>
+<!--    统计指定日期之后的预约数-->
+    <select id="findOrderCountAfterDate" resultType="long">
+        select count(id) from t_order where orderDate &gt;= #{value}
+    </select>
+    <!--    统计指定日期之后的到诊数-->
+    <select id="selectVisitsCountAfterDate" resultType="long">
+        select count(id) from t_order where orderDate &gt;= #{value} and orderStatus = '已到诊'
+    </select>
+<!--    根据日期统计到诊人数-->
+    <select id="selectVisitsCountByDate" resultType="long">
+        select count(id) from t_order where orderDate = #{value} and orderStatus = '已到诊'
+    </select>
+    <!--热门套餐，查询前4条-->
+    <select id="findHotSetmeal" resultType="map">
+        select
+            s.name,
+            count(o.id) setmeal_count ,
+            count(o.id)/(select count(id) from t_order) proportion
+        from t_order o inner join t_setmeal s on s.id = o.setmeal_id
+        group by o.setmeal_id
+        order by setmeal_count desc
+            limit 0,4
+    </select>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.java.serviceprovider.mapper.SetMealMapper">
+    <resultMap type="com.java.common.pojo.Setmeal" id="baseResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+    </resultMap>
+<!--    select是指定对checkgroup的查询标识-->
+    <resultMap type="Setmeal" id="findSetmealById" extends="baseResultMap">
+        <collection property="checkGroups" ofType="com.java.common.pojo.CheckGroup" column="id"
+                    select="com.java.serviceprovider.mapper.CheckGroupMapper.selectListBySetmealId">
+        </collection>
+    </resultMap>
+    <select id="findById" resultMap="findSetmealById">
+        select *
+        from t_setmeal
+        where id = #{id}
+    </select>
+
+    <select id="selectByCondition" resultType="setmeal">
+        select * from t_setmeal
+        <if test="value!=null  and value.length>0">
+            where code=#{code} or name=#{name} or helpCode=#{helpCode}
+        </if>
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into t_setmeal
+            (code, name, sex, age, helpCode, price, remark, attention, img)
+        values (#{code}, #{name}, #{sex}, #{age}, #{helpCode}, #{price}, #{remark}, #{attention}, #{img})
+    </insert>
+    <insert id="setMealGroupAndCheckGroup" parameterType="hashmap">
+        insert into t_setmeal_checkgroup
+        (setmeal_id, checkgroup_id) values
+        <foreach collection="itemIds" item="groupId" separator=",">
+            (#{setmeal.id},#{groupId})
+        </foreach>
+    </insert>
+    <select id="findAll" resultType="setmeal">
+        select *
+        from t_setmeal
+    </select>
+</mapper>

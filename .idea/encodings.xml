@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/health_backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/health_common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/health_interface/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/health_job/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/health_mobile/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/health_service_provider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springsecurity/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../../JAVA/apache-maven-3.8.3/maven-repository/org/springframework/boot/spring-boot-starter-parent/2.2.8.RELEASE/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

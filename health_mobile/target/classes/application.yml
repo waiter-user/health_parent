@@ -1,0 +1,28 @@
+dubbo:
+  application:
+    name: dubbo-health-mobile
+  registry:
+    address: zookeeper://192.168.159.131:2181
+  scan:
+    base-packages: com.java.mobile.controller
+server:
+  port: 9003
+qiniu:
+  accessKey: NR58E2ppqZeIYwFdTBmBSj7_J4z7AD9b5mft1q-X
+  secretKey: GEZ5cNSCQEuQ5izbNG7VRx0MCifDUCxHMo9vESuf
+  bucket: kanganhealth001
+spring:
+  redis:
+    host: 192.168.159.131
+    port: 6379
+    database: 0
+    timeout: 300000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+  jackson:
+    date-format: yyyy-MM-dd #在执行json序列化或反序列化
+    time-zone: GMT+8
